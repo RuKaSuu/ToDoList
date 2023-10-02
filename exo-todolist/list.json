@@ -1,0 +1,74 @@
+{
+    "todolists": [
+      {
+        "name": "Work",
+        "tasks": [
+          { "task": "Finish project A", "completed": false },
+          { "task": "Prepare presentation", "completed": true }
+        ]
+      },
+      {
+        "name": "Personal",
+        "tasks": [
+          { "task": "Go to the gym", "completed": false },
+          { "task": "Buy groceries", "completed": true }
+        ]
+      },
+      {
+        "name": "Home Improvement",
+        "tasks": [
+          { "task": "Paint the living room", "completed": false },
+          { "task": "Fix the leaky faucet", "completed": false }
+        ]
+      },
+      {
+        "name": "Travel",
+        "tasks": [
+          { "task": "Book flights", "completed": false },
+          { "task": "Plan itinerary", "completed": false }
+        ]
+      },
+      {
+        "name": "Hobbies",
+        "tasks": [
+          { "task": "Practice guitar", "completed": true },
+          { "task": "Read a book", "completed": false }
+        ]
+      },
+      {
+        "name": "Health",
+        "tasks": [
+          { "task": "Take vitamins", "completed": true },
+          { "task": "Schedule a dentist appointment", "completed": false }
+        ]
+      },
+      {
+        "name": "Family",
+        "tasks": [
+          { "task": "Call mom", "completed": false },
+          { "task": "Plan a family dinner", "completed": false }
+        ]
+      },
+      {
+        "name": "Finance",
+        "tasks": [
+          { "task": "Pay bills", "completed": true },
+          { "task": "Create a budget", "completed": false }
+        ]
+      },
+      {
+        "name": "Study",
+        "tasks": [
+          { "task": "Study for exam", "completed": false },
+          { "task": "Complete homework", "completed": true }
+        ]
+      },
+      {
+        "name": "Errands",
+        "tasks": [
+          { "task": "Pick up dry cleaning", "completed": false },
+          { "task": "Drop off package at the post office", "completed": true }
+        ]
+      }
+    ]
+  }
