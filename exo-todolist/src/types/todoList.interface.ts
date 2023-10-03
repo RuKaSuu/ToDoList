@@ -7,5 +7,5 @@ export interface TodoListInterface {
 export interface TaskInterface {
   id: number
   name: string
-  completed: boolean
+  completed: boolean | false
 }
