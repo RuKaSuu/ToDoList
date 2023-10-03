@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useTodoListStore } from '@/stores/todoList.store'
+
+const todoListStore = useTodoListStore()
+todoListStore.fetchTodoList()
 </script>
 
 <template>
   <header>
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+    </nav>
   </header>
 
   <RouterView />
