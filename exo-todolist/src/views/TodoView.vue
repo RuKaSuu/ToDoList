@@ -2,6 +2,7 @@
 import { useTodoListStore } from '@/stores/todoList.store'
 import { useRoute } from 'vue-router'
 import { ref } from 'vue'
+import Swal from 'sweetalert2'
 
 const route = useRoute()
 const todoListStore = useTodoListStore()
@@ -12,10 +13,34 @@ const changeTaskStatus = (id: number, taskId: number) => {
 const name = ref('')
 const addTask = () => {
   todoListStore.addTask(name.value, route.params.id as number)
+  Swal.fire({
+    title: 'Task added',
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1500
+  })
   name.value = ''
 }
 const removeTask = (taskId: number) => {
-  todoListStore.removeTask(route.params.id as number, taskId)
+  Swal.fire({
+    title: 'Do you want to delete this task?',
+    icon: 'warning',
+    showConfirmButton: true,
+    showCancelButton: true,
+    cancelButtonText: 'No',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      todoListStore.removeTask(route.params.id as number, taskId)
+
+      Swal.fire({
+        title: 'Task deleted',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  })
 }
 </script>
 

@@ -2,6 +2,7 @@
 import { useTodoListStore } from '@/stores/todoList.store'
 import router from '@/router'
 import { ref } from 'vue'
+import Swal from 'sweetalert2'
 
 const todoListStore = useTodoListStore()
 
@@ -12,11 +13,35 @@ const goToTodo = (id: number) => {
 const todoListName = ref('')
 const addTodo = () => {
   todoListStore.addTodoList(todoListName.value)
+  Swal.fire({
+    title: 'Todo list added',
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1500
+  })
   todoListName.value = ''
 }
 
 const removeTodoList = (id: number) => {
-  todoListStore.removeTodoList(id)
+  Swal.fire({
+    title: 'Do you want to delete this todo list?',
+    icon: 'warning',
+    showConfirmButton: true,
+    showCancelButton: true,
+    cancelButtonText: 'No',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      todoListStore.removeTodoList(id)
+
+      Swal.fire({
+        title: 'Todo list deleted',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+  })
 }
 </script>
 
