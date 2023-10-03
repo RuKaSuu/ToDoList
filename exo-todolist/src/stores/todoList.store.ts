@@ -27,6 +27,14 @@ export const useTodoListStore = defineStore('todoList', {
       const data = await fetch('../../public/list.json').then((res) => res.json())
       console.log(data)
       this.todos = data.todolists
+    },
+
+    changeTaskStatus(id: number, taskId: number) {
+      const todoList = this.todos.find((todoList) => todoList.id === id)
+      const task = todoList?.tasks.find((task) => task.id === taskId)
+      if (task) {
+        task.completed = !task.completed
+      }
     }
   }
 })

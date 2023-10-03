@@ -4,6 +4,10 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const todoListStore = useTodoListStore()
+
+const changeTaskStatus = (id: number, taskId: number) => {
+  todoListStore.changeTaskStatus(id, taskId)
+}
 </script>
 
 <template>
@@ -12,7 +16,10 @@ const todoListStore = useTodoListStore()
       <div v-if="(route.params.id as number) === (todo.id as number)">
         {{ todo.name }}
         <div v-for="task in todo.tasks" :key="task.id">
-          {{ task.name }} - {{ task.completed ? '👍' : '👎' }}
+          {{ task.name }} -
+          <span @click="changeTaskStatus(todo.id, task.id)" class="cursor-pointer">
+            {{ task.completed ? '👍' : '👎' }}
+          </span>
         </div>
       </div>
     </div>
