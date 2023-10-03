@@ -1,4 +1,4 @@
-import type {TaskInterface, TodoListInterface} from '@/types/todoList.interface'
+import type { TaskInterface, TodoListInterface } from '@/types/todoList.interface'
 import { defineStore } from 'pinia'
 
 interface TodoListState {
@@ -10,12 +10,12 @@ export const useTodoListStore = defineStore('todoList', {
     todos: []
   }),
   actions: {
-    addTodoList(todoListName:string) {
-        const todoList: TodoListInterface = {
-            id: 0,
-            name: todoListName,
-            tasks: []
-        }
+    addTodoList(todoListName: string) {
+      const todoList: TodoListInterface = {
+        id: 0,
+        name: todoListName,
+        tasks: []
+      }
       let id: number = 0
 
       for (let i = 0; i < this.todos.length; i++) {
@@ -24,14 +24,21 @@ export const useTodoListStore = defineStore('todoList', {
         }
       }
       todoList.id = id + 1
-
       this.todos.push(todoList)
+      this.setInStorage()
     },
 
     async fetchTodoList() {
-      const data = await fetch('../../public/list.json').then((res) => res.json())
-      console.log(data)
-      this.todos = data.todolists
+      if (localStorage.getItem('todoList')) {
+        const data = localStorage.getItem('todoList')
+        if (data) {
+          this.todos = JSON.parse(data)
+        }
+      } else {
+        const data = await fetch('../../public/list.json').then((res) => res.json())
+        console.log(data)
+        this.todos = data.todolists
+      }
     },
 
     changeTaskStatus(id: number, taskId: number) {
@@ -40,42 +47,51 @@ export const useTodoListStore = defineStore('todoList', {
       if (task) {
         task.completed = !task.completed
       }
+      this.setInStorage()
     },
 
-    addTask(name:string,todoListId:number) {
-        const task: TaskInterface = {
-            id: 0,
-            name,
-            completed: false
-        }
+    addTask(name: string, todoListId: number) {
+      const task: TaskInterface = {
+        id: 0,
+        name,
+        completed: false
+      }
       const todoList = this.todos.find((todoList) => todoList.id === todoListId)
       if (todoList) {
         let id: number = 0
         for (let i = 0; i < todoList.tasks.length; i++) {
-            if (todoList.tasks[i].id > id) {
-                id = todoList.tasks[i].id
-            }
+          if (todoList.tasks[i].id > id) {
+            id = todoList.tasks[i].id
+          }
         }
         task.id = id + 1
         todoList.tasks.push(task)
       }
+      this.setInStorage()
     },
 
     removeTask(todoListId: number, taskId: number) {
-        const todoList = this.todos.find((todoList) => todoList.id === todoListId)
-        const taskIndex:number|undefined = todoList?.tasks.findIndex((task) => task.id === taskId)
-        console.log(taskIndex)
-        if (taskIndex !== -1) {
-            todoList?.tasks.splice(taskIndex as number, 1)
-        }
-    },
-      removeTodoList(todoListId: number) {
-        const todoListIndex:number|undefined = this.todos.findIndex((todoList) => todoList.id === todoListId)
-        console.log(todoListIndex)
-        if (todoListIndex !== -1) {
-            this.todos.splice(todoListIndex as number, 1)
-        }
+      const todoList = this.todos.find((todoList) => todoList.id === todoListId)
+      const taskIndex: number | undefined = todoList?.tasks.findIndex((task) => task.id === taskId)
+      console.log(taskIndex)
+      if (taskIndex !== -1) {
+        todoList?.tasks.splice(taskIndex as number, 1)
       }
+      this.setInStorage()
+    },
+    removeTodoList(todoListId: number) {
+      const todoListIndex: number | undefined = this.todos.findIndex(
+        (todoList) => todoList.id === todoListId
+      )
+      console.log(todoListIndex)
+      if (todoListIndex !== -1) {
+        this.todos.splice(todoListIndex as number, 1)
+      }
+      this.setInStorage()
+    },
 
+    setInStorage() {
+      localStorage.setItem('todoList', JSON.stringify(this.todos))
     }
+  }
 })

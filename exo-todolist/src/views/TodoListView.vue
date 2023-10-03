@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTodoListStore } from '@/stores/todoList.store'
 import router from '@/router'
-import {ref} from "vue";
+import { ref } from 'vue'
 
 const todoListStore = useTodoListStore()
 
@@ -12,9 +12,10 @@ const goToTodo = (id: number) => {
 const todoListName = ref('')
 const addTodo = () => {
   todoListStore.addTodoList(todoListName.value)
+  todoListName.value = ''
 }
 
-const removeTodoList = (id:number) => {
+const removeTodoList = (id: number) => {
   todoListStore.removeTodoList(id)
 }
 </script>
@@ -26,10 +27,12 @@ const removeTodoList = (id:number) => {
       <button @click="addTodo()">＋</button>
     </div>
     <div v-for="todo in todoListStore.todos" :key="todo.id">
-     <p class="m-2">
-       <span @click="goToTodo(todo.id)" class="cursor-pointer hover:bg-[#1da1f2]/90 p-2">{{ todo.name }}</span>
-       <button @click="removeTodoList(todo.id)">🗑</button>
-     </p>
+      <p class="m-2">
+        <span @click="goToTodo(todo.id)" class="cursor-pointer hover:bg-[#1da1f2]/90 p-2">{{
+          todo.name
+        }}</span>
+        <button @click="removeTodoList(todo.id)">🗑</button>
+      </p>
     </div>
   </div>
 </template>

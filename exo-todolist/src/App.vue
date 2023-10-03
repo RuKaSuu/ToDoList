@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import {useTodoListStore} from "@/stores/todoList.store";
+import { useTodoListStore } from '@/stores/todoList.store'
 
 const todoListStore = useTodoListStore()
 if (todoListStore.todos.length === 0) {
